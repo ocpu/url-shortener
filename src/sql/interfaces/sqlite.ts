@@ -61,7 +61,7 @@ class SQLiteConnection implements Connection {
 }
 export default <Interface>{
   dsnPrefixes: ['sqlite', 'sqlite3'],
-  async create(filename): Promise<Connection> {
+  async create(filename: string, _, __): Promise<Connection> {
     const db = new (await import('sqlite3')).Database(filename)
     return new SQLiteConnection(db)
   }

@@ -1,7 +1,9 @@
 import sqlite from './sqlite'
+import mysql from './mysql'
 
 import { Interface } from '../interface'
 
 export default [
-  sqlite
+  sqlite,
+  mysql
 ] as Interface[]

@@ -21,12 +21,14 @@ export interface Connection {
 
 import interfaces from './interfaces'
 
-export function createConnection(dsn: string): Promise<Connection> {
-  const [prefix, rest] = dsn.split(':', 2)
+export function createConnection(dsn: string): Promise<Connection>
+export function createConnection(dsn: string, user: string, password: string): Promise<Connection>
+export function createConnection(dsn: string, user?: string, password?: string): Promise<Connection> {
+  const [prefix, ...rest] = dsn.split(':')
   const iface = interfaces.find(iface => iface.dsnPrefixes.includes(prefix))
 
   if (!iface)
     throw new Error('Could not find driver for: ' + dsn)
 
-  return iface.create(rest)
+  return iface.create(rest.join(':'), user, password)
 }
