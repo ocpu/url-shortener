@@ -30,7 +30,7 @@ import { randomBytes } from 'crypto'
   app.use('/static', express.static(resolve(__dirname, '..', 'static')))
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use((req, _, next) => {
-    log('debug', 'Incoming request: %s -> %s', req.method, req.url)
+    log(req.method, req.url)
     next()
   })
   app.get('/', (_, res) => res.render('index'))
@@ -67,7 +67,7 @@ import { randomBytes } from 'crypto'
     const result = await stmts.get.execute(req.query.url)
 
     if (typeof result === 'undefined')
-    return res.redirect('/')
+      return res.redirect('/')
 
     const ctx = {
       url: req.query.url,
