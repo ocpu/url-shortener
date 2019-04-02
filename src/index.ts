@@ -11,24 +11,10 @@ import { randomBytes } from 'crypto'
     console.error(err)
   })
 
-  const db = await createConnection('sqlite3:' + resolve(__dirname, '..', 'db.sqlite3'))
+  const db = await createConnection('mysql://localhost:3306/urlshortener', process.env.MYSQL_USER || '', process.env.MYSQL_PASSWORD || '')
 
   type Short = { id: number, identifier: string, url: string, created: Date }
   type Use = { used: string, when: Date }
-
-  ;await db.execute`CREATE TABLE IF NOT EXISTS shorts (
-    id INTEGER PRIMARY KEY,
-    identifier TEXT,
-    url TEXT,
-    created TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-
-    UNIQUE(identifier, url)
-  );`
-  
-  ;await db.execute`CREATE TABLE IF NOT EXISTS uses (
-    used INTEGER,
-    at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  );`
 
   const stmts = {
     get: db.prepare<Short>(`SELECT id, identifier, url, created FROM shorts WHERE url = ?`),
