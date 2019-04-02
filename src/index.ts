@@ -27,7 +27,7 @@ import { randomBytes } from 'crypto'
   const app = express()
   app.set('view engine', 'pug')
 
-  app.use(express.static(resolve(__dirname, '..', 'static')))
+  app.use('/static', express.static(resolve(__dirname, '..', 'static')))
   app.use(bodyParser.urlencoded({ extended: true }))
   app.use((req, _, next) => {
     log('debug', 'Incoming request: %s -> %s', req.method, req.url)
