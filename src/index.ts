@@ -99,5 +99,5 @@ import { randomBytes } from 'crypto'
     res.redirect(result.url)
   })
 
-  const server = app.listen(3000, () => log('main', 'Now listening on: http://localhost:%s', (<AddressInfo>server.address()).port))
+  const server = app.listen(process.env.PORT || 3000, () => log('main', 'Now listening on: http://localhost:%s', (<AddressInfo>server.address()).port))
 })()
